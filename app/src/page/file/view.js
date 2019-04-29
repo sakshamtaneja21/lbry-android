@@ -451,8 +451,8 @@ class FilePage extends React.PureComponent {
         const playerStyle = [filePageStyle.player,
           this.state.isLandscape ? filePageStyle.containedPlayerLandscape :
           (this.state.fullscreenMode ? filePageStyle.fullscreenPlayer : filePageStyle.containedPlayer)];
-        const playerBgStyle = [filePageStyle.playerBackground, this.state.fullscreenMode ?
-          filePageStyle.fullscreenPlayerBackground : filePageStyle.containedPlayerBackground];
+        const playerBgStyle = [filePageStyle.playerBackground, filePageStyle.containedPlayerBackground /*this.state.fullscreenMode ?
+          filePageStyle.fullscreenPlayerBackground : filePageStyle.containedPlayerBackground*/];
         // at least 2MB (or the full download) before media can be loaded
         const canLoadMedia = true; /*fileInfo &&
           (fileInfo.written_bytes >= 2097152 || fileInfo.written_bytes == fileInfo.total_bytes); // 2MB = 1024*1024*2*/
