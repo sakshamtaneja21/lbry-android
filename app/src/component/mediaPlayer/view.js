@@ -93,10 +93,9 @@ class MediaPlayer extends React.PureComponent {
   }
 
   onProgress = (data) => {
-    const { savePosition, fileInfo } = this.props;
+    const { savePosition, claim } = this.props;
 
-
-    this.setState({ currentTime: data.currentTime }, () => savePosition(fileInfo.claim_id, fileInfo.outpoint, data.currentTime));
+    this.setState({ currentTime: data.currentTime }, () => savePosition(claim.claim_id, claim.outpoint, data.currentTime));
 
     if (!this.state.seeking) {
       this.setSeekerPosition(this.calculateSeekerPosition());
@@ -339,7 +338,8 @@ class MediaPlayer extends React.PureComponent {
   }
 
   render() {
-    const { backgroundPlayEnabled, fileInfo, thumbnail, onLayout, style } = this.props;
+    const { backgroundPlayEnabled, claim, fileInfo, thumbnail, onLayout, style } = this.props;
+    const { claim_id: claimId, name: claimName } = claim;
     const completedWidth = this.getCurrentTimePercentage() * this.seekerWidth;
     const remainingWidth = this.seekerWidth - completedWidth;
     let styles = [this.state.fullscreenMode ? mediaPlayerStyle.fullscreenContainer : mediaPlayerStyle.container];
@@ -354,9 +354,11 @@ class MediaPlayer extends React.PureComponent {
     const trackingStyle = [mediaPlayerStyle.trackingControls, this.state.fullscreenMode ?
       mediaPlayerStyle.fullscreenTrackingControls : mediaPlayerStyle.containedTrackingControls];
 
+    // old uri: 'file:///' + this.getEncodedDownloadPath(fileInfo)
+
     return (
       <View style={styles} onLayout={onLayout}>
-        <Video source={{ uri: 'file:///' + this.getEncodedDownloadPath(fileInfo) }}
+        <Video source={{uri: `http://localhost:5279/get/${claimName}/${claimId}`}}
                ref={(ref: Video) => { this.video = ref; }}
                resizeMode={this.state.resizeMode}
                playInBackground={backgroundPlayEnabled}

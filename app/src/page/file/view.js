@@ -60,7 +60,7 @@ class FilePage extends React.PureComponent {
       fullscreenMode: false,
       imageUrls: null,
       isLandscape: false,
-      mediaLoaded: false,
+      mediaLoaded: true,
       pageSuspended: false,
       relatedContentY: 0,
       showDescription: false,
@@ -436,13 +436,13 @@ class FilePage extends React.PureComponent {
           tags = claim.value.tags;
         }
 
-        const completed = fileInfo && fileInfo.completed;
+        const completed = true; // fileInfo && fileInfo.completed;
         const isRewardContent = rewardedContentClaimIds.includes(claim.claim_id);
         const description = metadata.description ? metadata.description : null;
         const mediaType = Lbry.getMediaType(contentType);
         const isPlayable = mediaType === 'video' || mediaType === 'audio';
         const { height, channel_name: channelName, value } = claim;
-        const showActions = !this.state.fullscreenMode && !this.state.showImageViewer && !this.state.showWebView;
+        const showActions = false; //!this.state.fullscreenMode && !this.state.showImageViewer && !this.state.showWebView;
         const showFileActions = (completed || (fileInfo && !fileInfo.stopped && fileInfo.written_bytes < fileInfo.total_bytes));
         const channelClaimId = value && value.publisherSignature && value.publisherSignature.certificateId;
         const canSendTip = this.state.tipAmount > 0;
@@ -454,8 +454,8 @@ class FilePage extends React.PureComponent {
         const playerBgStyle = [filePageStyle.playerBackground, this.state.fullscreenMode ?
           filePageStyle.fullscreenPlayerBackground : filePageStyle.containedPlayerBackground];
         // at least 2MB (or the full download) before media can be loaded
-        const canLoadMedia = fileInfo &&
-          (fileInfo.written_bytes >= 2097152 || fileInfo.written_bytes == fileInfo.total_bytes); // 2MB = 1024*1024*2
+        const canLoadMedia = true; /*fileInfo &&
+          (fileInfo.written_bytes >= 2097152 || fileInfo.written_bytes == fileInfo.total_bytes); // 2MB = 1024*1024*2*/
         const isViewable = (mediaType === 'image' || mediaType === 'text');
         const isWebViewable = mediaType === 'text';
         const canOpen =  isViewable && completed;
@@ -483,11 +483,11 @@ class FilePage extends React.PureComponent {
           }
         }
 
-        if (fileInfo && !this.state.autoDownloadStarted && this.state.uriVars && 'true' === this.state.uriVars.download) {
+        /*if (fileInfo && !this.state.autoDownloadStarted && this.state.uriVars && 'true' === this.state.uriVars.download) {
           this.setState({ autoDownloadStarted: true }, () => {
             purchaseUri(uri, this.startDownloadFailed);
           });
-        }
+        }*/
 
         if (this.state.downloadPressed && canOpen) {
           // automatically open a web viewable or image file after the download button is pressed
@@ -535,8 +535,9 @@ class FilePage extends React.PureComponent {
                        this.setState({ playerBgHeight: evt.nativeEvent.layout.height });
                      }
                    }} />}
-                {(canLoadMedia && fileInfo && isPlayable) &&
+                {(canLoadMedia && isPlayable) &&
                   <MediaPlayer
+                    claim={claim}
                     fileInfo={fileInfo}
                     assignPlayer={(ref) => { this.player = ref; }}
                     uri={uri}
@@ -559,7 +560,7 @@ class FilePage extends React.PureComponent {
                 <View style={filePageStyle.actions}>
                   {showFileActions &&
                     <View style={filePageStyle.fileActions}>
-                      {completed && <Button style={filePageStyle.actionButton}
+                      {(false && completed) && <Button style={filePageStyle.actionButton}
                                             theme={"light"}
                                             icon={"trash"}
                                             text={"Delete"}
