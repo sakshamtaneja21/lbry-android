@@ -95,7 +95,7 @@ class MediaPlayer extends React.PureComponent {
   onProgress = (data) => {
     const { savePosition, claim } = this.props;
 
-    this.setState({ currentTime: data.currentTime }, () => savePosition(claim.claim_id, claim.outpoint, data.currentTime));
+    this.setState({ currentTime: data.currentTime }, () => savePosition(claim.claim_id, claim.nout, data.currentTime));
 
     if (!this.state.seeking) {
       this.setSeekerPosition(this.calculateSeekerPosition());
