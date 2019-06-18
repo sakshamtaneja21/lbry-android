@@ -82,7 +82,8 @@ def start():
         components_to_skip=[HASH_ANNOUNCER_COMPONENT, PEER_PROTOCOL_SERVER_COMPONENT],
         save_blobs=False,
         save_files=False,
-        use_upnp=False
+        use_upnp=False,
+        known_dht_nodes='jiggytom.mynetgear.com:80'
     )
 
     for directory in (conf.data_dir, conf.download_dir, conf.wallet_dir):
