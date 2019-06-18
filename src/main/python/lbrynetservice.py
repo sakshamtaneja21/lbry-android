@@ -83,7 +83,7 @@ def start():
         save_blobs=False,
         save_files=False,
         use_upnp=False,
-        known_dht_nodes= ['jiggytom.mynetgear.com:80']
+        known_dht_nodes= [f'jiggytom.mynetgear.com:80']
     )
 
     for directory in (conf.data_dir, conf.download_dir, conf.wallet_dir):
