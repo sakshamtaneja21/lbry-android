@@ -314,8 +314,6 @@ public class MainActivity extends Activity implements DefaultHardwareBackBtnHand
                 if (resultCode == RESULT_OK) {
                     Uri fileUri = data.getData();
                     String filePath = getRealPathFromURI_API19(this, fileUri);
-                    android.util.Log.d("ReactNativeJS", "fileUri=" + filePath);
-                    
                     WritableMap params = Arguments.createMap();
                     params.putString("path", filePath);
                     reactContext.getJSModule(DeviceEventManagerModule.RCTDeviceEventEmitter.class)
